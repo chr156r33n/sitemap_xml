@@ -54,7 +54,9 @@ def main():
                 csv_writer.writerow(["URL", "Response Code", "Canonical URL", "Canonical Match", "Meta Robots"])
                 csv_writer.writerows(results)
             st.success("Process completed.")
-            st.markdown(f"Download the CSV file: [link]({csv_filename})")
+
+            # Provide a direct link to the file on the local filesystem
+            st.markdown(f"Download the CSV file: [link](/{csv_filename})")
 
 if __name__ == "__main__":
     main()
