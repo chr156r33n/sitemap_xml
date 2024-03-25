@@ -34,8 +34,10 @@ def process_sitemap(url, user_agent):
                 meta_robots_tag = soup.find('meta', attrs={'name': 'robots'})
                 meta_robots_content = meta_robots_tag['content'] if meta_robots_tag else ''
                 results.append([url, response_code, canonical_url, canonical_match, meta_robots_content])
+                st.write(f"Checked URL: {url}")
             else:
                 results.append([url, response_code])
+                st.write(f"Checked URL: {url} (Response code: {response_code})")
     return results
 
 # Main function
