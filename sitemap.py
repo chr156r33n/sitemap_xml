@@ -10,7 +10,7 @@ def extract_domain(url):
     return url.split('//')[-1].split('/')[0]
 
 # Function to process XML sitemaps
-def process_sitemap(url, user_agent, proxy=None, timeout=10):
+def process_sitemap(url, user_agent, proxy=None, timeout=30):
     results = []
     response = requests.get(url, headers={'User-Agent': user_agent}, proxies=proxy, timeout=timeout)
     if response.status_code != 200:
