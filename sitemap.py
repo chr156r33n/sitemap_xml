@@ -56,7 +56,7 @@ def main():
             st.success("Process completed.")
 
             # Provide a direct link to the file on the local filesystem
-            st.markdown(f"Download the CSV file: [link](/{csv_filename})")
+            st.markdown(f"Download the CSV file: [link](./{csv_filename})")
 
 if __name__ == "__main__":
     main()
