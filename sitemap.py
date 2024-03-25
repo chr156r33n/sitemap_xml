@@ -11,7 +11,7 @@ def extract_domain(url):
 # Function to process XML sitemaps
 def process_sitemap(url, user_agent, csv_writer):
     response = requests.get(url, headers={'User-Agent': user_agent})
-    soup = BeautifulSoup(response.content, 'lxml')  # Specify 'lxml' as the parser
+    soup = BeautifulSoup(response.content, 'xml')  # Specify 'lxml' as the parser
     for loc in soup.find_all('loc'):
         url = loc.text
         response = requests.head(url, headers={'User-Agent': user_agent})
