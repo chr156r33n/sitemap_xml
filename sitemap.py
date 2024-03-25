@@ -1,12 +1,7 @@
-import subprocess
-
-# Install BeautifulSoup if not already installed
-subprocess.run(["pip", "install", "beautifulsoup4"])
-
 import streamlit as st
 import requests
 from datetime import datetime
-from bs4 import BeautifulSoup
+import BeautifulSoup
 import csv
 
 # Function to extract the domain name from the URL
