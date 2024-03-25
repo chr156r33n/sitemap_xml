@@ -1,7 +1,7 @@
 import streamlit as st
 import requests
 from datetime import datetime
-from bs4 import BeautifulSoup4
+from bs4 import BeautifulSoup
 import csv
 
 # Function to extract the domain name from the URL
