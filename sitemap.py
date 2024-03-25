@@ -60,6 +60,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
-# Configure Streamlit to serve files from the directory where CSV files are generated
-st.StaticHandler.get_st_handler(force=False)('{}', '.', 'my_app', 'my_app')
