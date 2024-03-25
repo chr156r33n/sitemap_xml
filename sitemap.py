@@ -17,6 +17,7 @@ def process_sitemap(url, user_agent, csv_writer):
     if sitemap_tags:
         for sitemap_tag in sitemap_tags:
             nested_sitemap_url = sitemap_tag.find('loc').text
+            st.write(f"Processing nested sitemap: {nested_sitemap_url}")
             process_sitemap(nested_sitemap_url, user_agent, csv_writer)
     else:
         for loc in soup.find_all('loc'):
@@ -24,6 +25,7 @@ def process_sitemap(url, user_agent, csv_writer):
             response = requests.head(url, headers={'User-Agent': user_agent})
             response_code = response.status_code
             if response_code == 200:
+                st.write(f"Checking URL: {url}")
                 page_response = requests.get(url, headers={'User-Agent': user_agent})
                 page_content = page_response.content
                 soup = BeautifulSoup(page_content, 'html.parser')
@@ -40,19 +42,4 @@ def process_sitemap(url, user_agent, csv_writer):
 def main():
     st.title("XML Sitemap Checker")
     url = st.text_input("Enter XML Sitemap URL:")
-    user_agent = st.text_input("Enter User Agent:")
-    if st.button("Check Sitemap"):
-        domain = extract_domain(url)
-        current_datetime = datetime.now().strftime("%m%d%Y_%H%M")
-        csv_filename = f"{current_datetime}_{domain}_xml_sitemap_urls.csv"
-        csv_filepath = os.path.join(os.getcwd(), csv_filename)
-        with st.spinner("Processing..."):
-            with open(csv_filepath, 'w', newline='') as csvfile:
-                csv_writer = csv.writer(csvfile)
-                csv_writer.writerow(["URL", "Response Code", "Canonical URL", "Canonical Match", "Meta Robots"])
-                process_sitemap(url, user_agent, csv_writer)
-            st.success("Process completed.")
-            st.markdown(f"Download the CSV file: [link]({csv_filename})")
-
-if __name__ == "__main__":
-    main()
+    user_agent = st.text_input("Enter User Agent:"
