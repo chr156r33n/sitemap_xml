@@ -42,4 +42,19 @@ def process_sitemap(url, user_agent, csv_writer):
 def main():
     st.title("XML Sitemap Checker")
     url = st.text_input("Enter XML Sitemap URL:")
-    user_agent = st.text_input("Enter User Agent:"
+    user_agent = st.text_input("Enter User Agent:")
+    if st.button("Check Sitemap"):
+        domain = extract_domain(url)
+        current_datetime = datetime.now().strftime("%m%d%Y_%H%M")
+        csv_filename = f"{current_datetime}_{domain}_xml_sitemap_urls.csv"
+        csv_filepath = os.path.join(os.getcwd(), csv_filename)
+        with st.spinner("Processing..."):
+            with open(csv_filepath, 'w', newline='') as csvfile:
+                csv_writer = csv.writer(csvfile)
+                csv_writer.writerow(["URL", "Response Code", "Canonical URL", "Canonical Match", "Meta Robots"])
+                process_sitemap(url, user_agent, csv_writer)
+            st.success("Process completed.")
+            st.markdown(f"Download the CSV file: [link]({csv_filename})")
+
+if __name__ == "__main__":
+    main()
