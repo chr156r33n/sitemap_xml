@@ -3,6 +3,7 @@ import requests
 from datetime import datetime
 from bs4 import BeautifulSoup
 import csv
+import time
 
 # Function to extract the domain name from the URL
 def extract_domain(url):
@@ -11,7 +12,7 @@ def extract_domain(url):
 # Function to process XML sitemaps
 def process_sitemap(url, user_agent, csv_writer):
     response = requests.get(url, headers={'User-Agent': user_agent})
-    soup = BeautifulSoup(response.content, 'lxml-xml')  # Specify 'lxml' as the parser
+    soup = BeautifulSoup(response.content, 'xml')  # Specify 'xml' as the parser
     for loc in soup.find_all('loc'):
         url = loc.text
         response = requests.head(url, headers={'User-Agent': user_agent})
@@ -38,11 +39,14 @@ def main():
         domain = extract_domain(url)
         current_datetime = datetime.now().strftime("%m%d%Y_%H%M")
         csv_filename = f"{current_datetime}_{domain}_xml_sitemap_urls.csv"
-        with open(csv_filename, 'w', newline='') as csvfile:
-            csv_writer = csv.writer(csvfile)
-            csv_writer.writerow(["URL", "Response Code", "Canonical URL", "Canonical Match", "Meta Robots"])
-            process_sitemap(url, user_agent, csv_writer)
-        st.success(f"Process completed. CSV file: {csv_filename}")
+        with st.spinner("Processing..."):
+            with open(csv_filename, 'w', newline='') as csvfile:
+                csv_writer = csv.writer(csvfile)
+                csv_writer.writerow(["URL", "Response Code", "Canonical URL", "Canonical Match", "Meta Robots"])
+                process_sitemap(url, user_agent, csv_writer)
+            time.sleep(1)  # Simulate a delay to ensure the file is created
+            st.success("Process completed.")
+            st.markdown(f"Download the CSV file: [link]({csv_filename})")
 
 if __name__ == "__main__":
     main()
