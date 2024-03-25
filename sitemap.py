@@ -52,7 +52,7 @@ def process_sitemap(url, user_agent, proxy=None, timeout=10):
 def main():
     st.title("XML Sitemap Checker")
     url = st.text_input("Enter XML Sitemap URL:")
-    user_agent = st.text_input("Enter User Agent:")
+    user_agent = st.text_input("Enter User Agent(optional):")
     proxy = st.text_input("Enter Proxy (optional):")
     if st.button("Check Sitemap"):
         domain = extract_domain(url)
