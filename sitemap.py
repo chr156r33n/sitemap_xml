@@ -3,7 +3,7 @@ import requests
 from datetime import datetime
 from bs4 import BeautifulSoup
 import csv
-import time
+import os
 
 # Function to extract the domain name from the URL
 def extract_domain(url):
@@ -39,12 +39,12 @@ def main():
         domain = extract_domain(url)
         current_datetime = datetime.now().strftime("%m%d%Y_%H%M")
         csv_filename = f"{current_datetime}_{domain}_xml_sitemap_urls.csv"
+        csv_filepath = os.path.join(os.getcwd(), csv_filename)
         with st.spinner("Processing..."):
-            with open(csv_filename, 'w', newline='') as csvfile:
+            with open(csv_filepath, 'w', newline='') as csvfile:
                 csv_writer = csv.writer(csvfile)
                 csv_writer.writerow(["URL", "Response Code", "Canonical URL", "Canonical Match", "Meta Robots"])
                 process_sitemap(url, user_agent, csv_writer)
-            time.sleep(1)  # Simulate a delay to ensure the file is created
             st.success("Process completed.")
             st.markdown(f"Download the CSV file: [link]({csv_filename})")
 
